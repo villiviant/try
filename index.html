@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8">
+	<title>Demo</title>
+	<link rel="stylesheet" type="text/css" href="style.css" /> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+</head><body><div id="wrapper">
+
+	<h1 class="f"><section>
+			<span data-key="specie" contenteditable="true" autocomplete="off">...</span>
+			<button class="search"> &nbsp; </button>
+	</section></h1>
+	<article>
+		<div id="choosehl" class="fifty">
+			<div data-hl="7" class="lang-7">
+				<b>Español</b>
+			</div>
+			<div data-hl="9" class="lang-9">
+				<b>English</b>
+			</div>
+		</div>
+	</article>
+	<div style="clear:both"></div>
+</div>
+
+<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>-->
+<script src="js/jquery.min.js"></script>
+<script src="js/functions.js"></script>
+<script>
+var chrome;
+if(localStorage.hl) var hl = localStorage.hl;
+else {
+	var hl = navigator.language || navigator.userLanguage; 
+	hl = localStorage.hl = (hl == 'es' ? 7 : 9);
+	console.log(hl);
+}
+
+var l10n = {
+	7: {moves:'Ataques', locs:'Área',noresults:'Sin resultados', cantfind:'No hemos encontrado nada', height:'Altura', weight:'Peso', type:'Tipo', rarity:'Rareza', evol:'Evolución',
+		bylevel:'Por nivel', byegg:'Por huevo', bytutor:'Por tutor', bytmhm:'Por MT/MO', choosevers: 'Selecciona una versión', attack:'Ataque', defense:'Defensa'},
+	9: {moves:'Moves', locs:'Locations',noresults:'No results', cantfind:'We couldn´t find anything', height:'Height', weight:'Weight', type:'Type', rarity:'Rarity', evol:'Evolution',
+		bylevel:'By level', byegg:'By egg', bytutor:'By tutor', bytmhm:'By TM/HM', choosevers: 'Choose a version above', attack:'Attack', defense:'Defense'}
+}
+$(document).ready(function(){
+	$('button.search').click(searchpoke);
+	$('[data-key]').keydown(function(e){
+		if(e.which == 13){
+			e.preventDefault();
+			searchpoke(e,$(this));
+		}
+	}).click(function(e){
+		var txt = $(this).text();
+		if(txt=='Welcome!' || txt=='¡Bienvenido!'||txt==l10n[hl].noresults)
+			$(this).text('');
+	});
+	function updateHl(){
+		if(localStorage.hl==7) {
+			$('#choosehl .lang-7 b').addClass('f');
+			$('h1 span').text('¡Bienvenido!');
+		} else  {
+			$('#choosehl .lang-9 b').addClass('f');
+			$('h1 span').text('Welcome!');
+		}
+		chrome = {
+			pokemon: [
+				'<table id="nav"><tr><td data-key="index"><strong>Bio</strong></td><td data-key="moves"><strong>'+l10n[hl].moves+'</strong></td><td data-key="area"><strong>'+l10n[hl].locs+'</strong></td><td data-key="stats"><strong>Stats</strong></td></tr></table>',
+			],
+			type: [
+				'<table id="nav"><tr><td data-key="index"><strong>Info</strong></td><td data-key="moves"><strong>'+l10n[hl].moves+'</strong></td><td data-key="pokemon"><strong>Pokémon</strong></td></tr></table>',
+			],
+		};
+	};
+	updateHl();
+	$('#choosehl div').click(function(e){
+		hl = localStorage.hl = $(this).data('hl');
+		$(this).parent().find('b').removeClass('f');
+		updateHl();
+	});
+	setEvents()
+});
+</script>
+</body></html>

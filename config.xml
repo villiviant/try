@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "com.wahackpokemon.dex"
+        versionCode="10" 
+        version   = "1.0.0">
+    <name>WahackDex</name>
+    <description>
+        Species encyclopedia 
+    </description>
+    <author href="https://build.phonegap.com" email="support@phonegap.com">
+        Serg!o
+    </author>
+	<icon src="app-icon.png" />
+	<access origin="https://wahackpokemon.com" />
+	<access origin="http://www.pokemonelite2000.com" />
+    <preference name="fullscreen" value="false" />
+    <preference name="show-splash-screen-spinner" value="false" />
+</widget>
